@@ -42,3 +42,19 @@ jobs:
           sample/*.elf
           sample/*.lua
           sample/Makefile
+    
+    - name: Compile Sample setjmp
+      run: |
+        cd sample_setjmp
+        make -j $(getconf _NPROCESSORS_ONLN) clean
+        make -j $(getconf _NPROCESSORS_ONLN) 
+
+    - name: Upload artifacts setjmp
+      if: ${{ success() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: lua-sample-setjmp-${{ steps.slug.outputs.sha8 }}
+        path: |
+          sample_setjmp/*.elf
+          sample_setjmp/*.lua
+          sample_setjmp/Makefile
